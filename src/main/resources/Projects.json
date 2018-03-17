@@ -1,0 +1,168 @@
+[
+  {
+    "project_id" : "HelloWorld"
+    ,"project_name" : "HelloWorld"
+    ,"project_path" : "D:/temp/AndroidHelloWorld"
+    ,"task_list" : [
+                 {
+                  "task_name" : "Update code"
+                  ,"task_class" : "org.jandjzone.buildroid.build.tasks.TaskGitPuller"
+                  ,"arguments" : {
+                                 "working_directory" : "D:/temp/AndroidHelloWorld"
+                                 ,"git_url" : "https://github.com/codepath/android_hello_world.git"
+                                 ,"private_key_path" : ""
+                                 ,"credential_user" : ""
+                                 ,"credential_password" : ""
+								 ,"commit_number" : "<commit_number>"
+                                 }
+                 }
+				 ,{
+                  "task_name" : "Update App Version"
+                  ,"task_class" : "org.jandjzone.buildroid.build.tasks.TaskUpdateAppVersion"
+                 }
+                 ,{
+                  "task_name" : "Assemble And Install"
+                  ,"task_class" : "org.jandjzone.buildroid.build.tasks.TaskGradleCommandLine"
+                  ,"arguments" : {
+				                   "gradle_tasks" : ["assembleDebug"]
+						         }
+                 }
+               ]
+  }
+  ,{
+    "project_id" : "google-maps-demo"
+    ,"project_name" : "Google Maps Sample"
+    ,"project_path" : "D:/temp/GoogleMapsSample"
+    ,"form_view" : "forms/form_google_maps.jsp"
+    ,"task_list" : [
+                 {
+                  "task_name" : "Update code"
+                  ,"task_class" : "org.jandjzone.buildroid.build.tasks.TaskGitPuller"
+                  ,"arguments" : {
+                                 "working_directory" : "D:/temp/GoogleMapsSample"
+                                 ,"git_url" : "https://github.com/codepath/android-google-maps-demo.git"
+                                 ,"private_key_path" : ""
+                                 ,"credential_user" : ""
+                                 ,"credential_password" : ""
+								 ,"commit_number" : "<commit_number>"
+                                 }
+                 }
+				 ,{
+                  "task_name" : "Update App Version"
+                  ,"task_class" : "org.jandjzone.buildroid.build.tasks.TaskUpdateResource"
+                  ,"arguments" : {
+                                   "resource_path" : "app/src/main/AndroidManifest.xml"
+                                   ,"update_nodes" : [
+                                          {
+                                            "node_location" : "manifest->android:versionCode->#text"
+                                            ,"new_value" : "<versionCode>"
+                                            ,"attribute_filter" : []
+                                          }
+										  ,{
+                                            "node_location" : "manifest->android:versionName->#text"
+                                            ,"new_value" : "<versionName>"
+                                            ,"attribute_filter" : []
+                                          }
+                                   ]
+                                 }
+                 }
+                 ,{
+                  "task_name" : "Update App Name"
+                  ,"task_class" : "org.jandjzone.buildroid.build.tasks.TaskUpdateResource"
+                  ,"arguments" : {
+                                   "resource_path" : "app/src/main/res/values/strings.xml"
+                                   ,"update_nodes" : [
+                                          {
+                                            "node_location" : "resources->string->#text"
+                                            ,"new_value" : "<google_maps_api_key>"
+                                            ,"attribute_filter" : [
+                                                        {"attr_name" : "name", "attr_value" : "google_maps_api_key"}
+                                                      ]
+                                          }
+                                   ]
+                                 }
+                 }
+                 ,{
+                  "task_name" : "Assemble Debug"
+                  ,"task_class" : "org.jandjzone.buildroid.build.tasks.TaskGradleCommandLine"
+                  ,"arguments" : {
+				                   "gradle_tasks" : ["assembleDebug"]
+						         }
+                 }
+               ]
+  }
+  ,{
+    "project_id" : "AndroidSampleSigning"
+    ,"project_name" : "Android Signing"
+    ,"project_path" : "D:/temp/AndroidUITestingExample"
+    ,"form_view" : "forms/form_signing.jsp"
+    ,"project_module" : "app"
+    ,"task_list" : [
+                 {
+                  "task_name" : "Update code"
+                  ,"task_class" : "org.jandjzone.buildroid.build.tasks.TaskGitPuller"
+                  ,"arguments" : {
+                                 "working_directory" : "D:/temp/AndroidUITestingExample"
+                                 ,"git_url" : "https://github.com/jason8377/AndroidUITestingExample.git"
+                                 ,"private_key_path" : ""
+                                 ,"credential_user" : ""
+                                 ,"credential_password" : ""
+                                 ,"commit_number" : "<commit_number>"
+                                 }
+                 }
+				 ,{
+                  "task_name" : "Build and sign"
+                  ,"task_class" : "org.jandjzone.buildroid.build.tasks.TaskGradleCommandLine"
+                  ,"arguments" : {
+				                  "gradle_tasks" : ["assembleRelease"]
+								  ,"signApk" : true
+								  ,"signingConfig" : {
+								       "zipalignEnabled" : true
+								       ,"storeFile" : "D:/jason/document/test_luo_new.jks"
+									   ,"keyAlias" : "<keyAlias>"
+									   ,"storePassword" : "<storePassword>"
+									   ,"keyPassword" : "<keyPassword>"
+									   ,"v1-signing-enabled" : <v1_signing_enabled>
+									   ,"v2-signing-enabled" : <v2_signing_enabled>
+								    }
+								 }
+                 }
+               ]
+  }
+  ,{
+    "project_id" : "UITesting"
+    ,"project_name" : "UI Testing"
+    ,"project_path" : "D:/temp/AndroidUITestingExample"
+    ,"form_view" : "forms/form_ui_testing.jsp"
+    ,"task_list" : [
+                 {
+                  "task_name" : "Update code"
+                  ,"task_class" : "org.jandjzone.buildroid.build.tasks.TaskGitPuller"
+                  ,"arguments" : {
+                                 "working_directory" : "D:/temp/AndroidUITestingExample"
+                                 ,"git_url" : "https://github.com/jason8377/AndroidUITestingExample.git"
+                                 ,"private_key_path" : ""
+                                 ,"credential_user" : ""
+                                 ,"credential_password" : ""
+                                 ,"commit_number" : "<commit_number>"
+                                 }
+                 }
+				 ,{
+                  "task_name" : "Unit Testing"
+                  ,"blockProcess" : false
+                  ,"task_class" : "org.jandjzone.buildroid.build.tasks.TaskGradleCommandLine"
+                  ,"arguments" : {
+				                  "gradle_tasks" : ["<unit_test_task>"]
+								 }
+                 }
+                 ,{
+                  "task_name" : "Unit Testing"
+                  ,"blockProcess" : false
+                  ,"task_class" : "org.jandjzone.buildroid.build.tasks.TaskGradleCommandLine"
+                  ,"arguments" : {
+				                  "gradle_tasks" : ["<ui_test_task>"]
+								 }
+                 }
+               ]
+  }
+]

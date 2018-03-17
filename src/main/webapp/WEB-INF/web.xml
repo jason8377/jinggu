@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Copyright (C) 2018 Jason Luo
+  
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+  
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+  
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-->
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" metadata-complete="true" version="3.0">
+  <display-name>Buildroid</display-name>
+  <description>Android CI System</description>
+  <servlet>
+    <servlet-name>JerseyServlet</servlet-name>
+    <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+    <init-param>
+      <param-name>javax.ws.rs.Application</param-name>
+      <param-value>org.jandjzone.buildroid.rest.BuildApplication</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>JerseyServlet</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description>AtmosphereServlet</description>
+    <servlet-name>AtmosphereServlet</servlet-name>
+    <servlet-class>org.atmosphere.cpr.AtmosphereServlet</servlet-class>
+    <init-param>
+      <param-name>org.atmosphere.cpr.packages</param-name>
+      <param-value>org.jandjzone.buildroid.websocket</param-value>
+    </init-param>
+    <load-on-startup>0</load-on-startup>
+    <async-supported>true</async-supported>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AtmosphereServlet</servlet-name>
+    <url-pattern>/ws/*</url-pattern>
+  </servlet-mapping>
+</web-app>
