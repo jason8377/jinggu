@@ -1,4 +1,4 @@
-# Looking for a lightweight Android web-based build tool? This might be the one for you.
+# Looking for a lightweight Android web-based build tool? This might be the one.
 <img src="http://www.jandjzone.com/images/screenshot1.png"></img>
 
 <li>Written in pure Java.
@@ -37,7 +37,7 @@ Android project point to existing folders in you file system.
 <li>Once build is done, if you see BUILD SUCCESS, congraturation, you are good to deploy it to your build server.
 <li>Navigate to your project folder, you will see Buildroid folder under target, copy it to webapp folder in your J2EE server.
 <li>Open browser, type in http://ip:port/buildroid
-<li>Enjoy building.
+<li>Enjoy.
 
 # Android projects and tasks configuration
 Projects are configured in Projects.json locates in WEB-INF/classes. You can move it to any CLASS_PATH location if you want.
@@ -65,7 +65,8 @@ Projects are configured in Projects.json locates in WEB-INF/classes. You can mov
   ,"task_list" : [......]
 }
 </pre>
-<li>Task: org.jandjzone.buildroid.build.tasks.TaskGitPuller
+<li>Task: org.jandjzone.buildroid.build.tasks.TaskGitPuller<br>
+TaskGitPuller is a plugin performs cloning or updating code from your remote Git repository.
 <pre>
 {
   "task_name" : "Update code from Git"
@@ -76,43 +77,149 @@ Projects are configured in Projects.json locates in WEB-INF/classes. You can mov
        * This can be different with "project_path" mentioned above as your repository might cover multi projects
        */
       "working_directory" : "D:/temp/AndroidHelloWorld"
-      /**
-       * Git URL, can be the following three.
+      
+	  /**
+       * Git URL, can be the following.
        * http://github.com/codepath/android_hello_world.git or
        * https://github.com/codepath/android_hello_world.git or
        * ssh://[your user name]@github.com/codepath/android_hello_world.git
        */
       ,"git_url" : "https://github.com/codepath/android_hello_world.git"
-      //If you are using asymmetry-based algorithm, specify private key path here
+      
+	  //If you are using asymmetry-based algorithm, specify private key path here
       ,"private_key_path" : ""
-      //For https which needs user name as credential
+      
+	  //For https which needs user name as credential
       ,"credential_user" : ""
-      //For https and SSH which needs password as credential
+      
+	  //For https and SSH which needs password as credential
       ,"credential_password" : ""
-      /**
+      
+	  /**
        * Commit number or branch name of your project code
        * Can be hard coded or passed from input form with the argument name wrapped with <>.
        */
-			,"commit_number" : "<commit_number>"
+	  ,"commit_number" : "<commit_number>"
   }
 }
 </pre>
-<li>Task: org.jandjzone.buildroid.build.tasks.TaskUpdateAppVersion
+<li>Task: org.jandjzone.buildroid.build.tasks.TaskUpdateAppVersion<br>
+TaskUpdateAppVersion changes the versionCode and versionName in you app/build.gradle.
+It doesn't have any argument definition here but accepts HTML form elements directly.<br>
+To do this, you will need versionCode and versionName as id in your form. See form_default.jsp for example.
 <pre>
-Coming soon
+{
+  "task_name" : "Update App Version"
+  ,"task_class" : "org.jandjzone.buildroid.build.tasks.TaskUpdateAppVersion"
+}
 </pre>
-<li>Task: org.jandjzone.buildroid.build.tasks.TaskUpdateResource
+<li>Task: org.jandjzone.buildroid.build.tasks.TaskUpdateResource<br>
+An Android project contains many XML files, like AndroidManifest.xml and other resources. In most cases,
+you can differ your APPs by using combinations of buildType,flavor and dimensions(introduced since Gralde3).<br>
+However, in some cases, you want to change XML based settings during build process instead of 
+changing the code in your repository.<br>
+TaskUpdateResource allows you change XML node/attribute text passed from HTML forms.<br>
+Note that one task can handle multi nodes/attributes in a single file at a time. 
+If you want to change different files, create new tasks.<br>
+<strong>Example of changing app name.</strong>
 <pre>
-Coming soon
+{
+  "task_name" : "Update App Name"
+  ,"task_class" : "org.jandjzone.buildroid.build.tasks.TaskUpdateResource"
+  ,"arguments" : {
+    "resource_path" : "app/src/main/res/values/strings.xml"
+    ,"update_nodes" : [
+      {
+        "node_location" : "resources->string->#text"
+        //app_name should be defined in you input form.
+        ,"new_value" : "<app_name>"
+        ,"attribute_filter" : [
+          {"attr_name" : "name", "attr_value" : "app_name"}
+        ]
+      }
+	  ,{
+        "node_location" : "resources->string->#text"
+        //server_url should be defined in you input form.
+        ,"new_value" : "<server_url>"
+        ,"attribute_filter" : [
+          {"attr_name" : "name", "attr_value" : "server_url"}
+        ]
+      }
+    ]
+  }
+}
 </pre>
-<li>Task: org.jandjzone.buildroid.build.tasks.TaskGradleCommandLine
+<strong>Example of changing app icon.</strong> Note that node "application" is not duplicating, you can ignore attribute_filter.
 <pre>
-Coming soon
+{
+  "task_name" : "Update App Icon"
+  ,"task_class" : "org.jandjzone.buildroid.build.tasks.TaskUpdateResource"
+  ,"arguments" : {
+    "resource_path" : "app/src/main/AndroidManifest.xml"
+    ,"update_nodes" : [
+      {
+        "node_location" : "manifest->application->android:icon->#text"
+        //app_icon should be defined in you input form.
+        ,"new_value" : "<app_icon>"
+      }
+    ]
+  }
+}
 </pre>
-<li>Task: org.jandjzone.buildroid.build.tasks.TaskSaveBuildHistory
+<li>Task: org.jandjzone.buildroid.build.tasks.TaskGradleCommandLine<br>
+TaskGradleCommandLine executes gradle tasks according to your DSL definition of your project.<br>
+Tips: You can get the list of tasks by executing "gradlew task".<br>
+<strong>Example: test,cAT and assembleDebug together</strong>
 <pre>
-Coming soon
+{
+  "task_name" : "Build"
+  ,"task_class" : "org.jandjzone.buildroid.build.tasks.TaskGradleCommandLine"
+  ,"arguments" : {
+    "gradle_tasks" : ["test","cAT","assembleDebug"]
+  }
+}
 </pre>
+<strong>Example: cAT</strong><br>
+The benefit of splitting task is that if it fails, the build process can proceed by setting blockProcess to false.
+<pre>
+{
+  "task_name" : "UI testing"
+  ,"task_class" : "org.jandjzone.buildroid.build.tasks.TaskGradleCommandLine"
+  ,"blockProcess" : false
+  ,"arguments" : {
+    "gradle_tasks" : ["cAT"]
+  }
+}
+</pre>
+<strong>Example: Sign release APP</strong>
+<pre>
+{
+  "task_name" : "Sign APK"
+  ,"task_class" : "org.jandjzone.buildroid.build.tasks.TaskGradleCommandLine"
+  ,"arguments" : {
+    "gradle_tasks" : ["assembleRelease"]
+    ,"signApk" : true
+    ,"signingConfig" : {
+      "zipalignEnabled" : true
+       ,"storeFile" : "D:/jason/document/test_luo_new.jks"
+       /**
+        * keyAlias,storePassword,keyPassword,v1_signing_enabled,v2_signing_enabled should be defined in you input form.
+        * See form_signing.jsp for more information.
+        */
+       ,"keyAlias" : "<keyAlias>"
+       ,"storePassword" : "<storePassword>"
+       ,"keyPassword" : "<keyPassword>"
+       ,"v1-signing-enabled" : <v1_signing_enabled>
+       ,"v2-signing-enabled" : <v2_signing_enabled>
+    }
+  }
+}
+</pre>
+<li>Task: org.jandjzone.buildroid.build.tasks.TaskSaveBuildHistory<br>
+TaskSaveBuildHistory performs saving build history to a embedded database which is SQLite. 
+No need have it in your task list, it will be called at the end of build process. <br>
+If you want the build history to be saved into another database, you can customize TaskSaveBuildHistory
+by using the bonecp database connection pool.
 
 # Create your own tasks
 Coming soon.
