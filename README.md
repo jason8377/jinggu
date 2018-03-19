@@ -132,7 +132,7 @@ If you want to change different files, create new tasks.<br>
       {
         "node_location" : "resources->string->#text"
         //app_name should be defined in you input form.
-        ,"new_value" : "<app_name>"
+        ,"new_value" : "&lt;app_name&gt;"
         ,"attribute_filter" : [
           {"attr_name" : "name", "attr_value" : "app_name"}
         ]
@@ -140,7 +140,7 @@ If you want to change different files, create new tasks.<br>
 	  ,{
         "node_location" : "resources->string->#text"
         //server_url should be defined in you input form.
-        ,"new_value" : "<server_url>"
+        ,"new_value" : "&lt;server_url&gt;"
         ,"attribute_filter" : [
           {"attr_name" : "name", "attr_value" : "server_url"}
         ]
@@ -160,7 +160,7 @@ If you want to change different files, create new tasks.<br>
       {
         "node_location" : "manifest->application->android:icon->#text"
         //app_icon should be defined in you input form.
-        ,"new_value" : "<app_icon>"
+        ,"new_value" : "&lt;app_icon&gt;"
       }
     ]
   }
@@ -206,11 +206,11 @@ The benefit of splitting task is that if it fails, the build process can proceed
         * keyAlias,storePassword,keyPassword,v1_signing_enabled,v2_signing_enabled should be defined in you input form.
         * See form_signing.jsp for more information.
         */
-       ,"keyAlias" : "<keyAlias>"
-       ,"storePassword" : "<storePassword>"
-       ,"keyPassword" : "<keyPassword>"
-       ,"v1-signing-enabled" : <v1_signing_enabled>
-       ,"v2-signing-enabled" : <v2_signing_enabled>
+       ,"keyAlias" : "&lt;keyAlias&gt;"
+       ,"storePassword" : "&lt;storePassword&gt;"
+       ,"keyPassword" : "&lt;keyPassword&gt;"
+       ,"v1-signing-enabled" : &lt;v1_signing_enabled&gt;
+       ,"v2-signing-enabled" : &lt;v2_signing_enabled&gt;
     }
   }
 }
