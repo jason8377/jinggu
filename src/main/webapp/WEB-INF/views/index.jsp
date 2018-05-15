@@ -102,7 +102,6 @@
                   ws.onopen = function() {
                       $scope.websocketConnected = true;
                   };
-
                   ws.onmessage = function (evt) { 
                       var received_msg = evt.data;
                       $scope.parseBuildMessage(received_msg);
@@ -148,7 +147,7 @@
   </head>
   <body>
     <!--navbar navbar-expand-md navbar-dark bg-dark-->
-    <nav class="navbar navbar-expand-md navbar-dark bd-navbar">
+    <nav class="navbar navbar-expand-md navbar-dark bd-navbar bg-dark">
       <a class="navbar-brand" href="#">Buildroid</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bd-docs-nav" aria-controls="bd-docs-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -157,9 +156,9 @@
 
     <div class="container-fluid">
       <div class="row flex-xl-nowrap">
-        <div class="col-12 col-md-4 col-xl-2 bd-sidebar">
-          <nav class="collapse bd-links" id="bd-docs-nav">
-            <a class="bd-toc-link {{projectInfo.project_id==project_id_selected?' alert-secondary':''}}" href="{{projectInfo.project_id}}"
+        <div class="col-12 col-md-4 col-xl-2 bd-sidebar" style="padding:0px">
+          <nav class="bd-links" id="bd-docs-nav" style="padding-left:0px;padding-right:0px">
+            <a class="nav-link {{projectInfo.project_id==project_id_selected?' alert-secondary':''}}" href="{{projectInfo.project_id}}"
                ng-repeat="projectInfo in projectList">
               {{projectInfo.project_name}}
             </a>
