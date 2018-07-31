@@ -21,7 +21,7 @@ Buildroid is a Maven project using Eclipse IDE. To compile it, you can eigher us
 Here I am going to use Eclipse to demonstrate how to compile and setup. 
 Before proceeding, make sure you have all the softwares listed above installed and setup.
 
-<li>Download source code <a href="https://github.com/jason8377/Buildroid">https://github.com/jason8377/Buildroid</a>
+<li>Download source code <a href="https://github.com/jason8377/Buildroid">https://github.com/jason8377/jinggu</a>
 <li>Launch Eclipse, import project and then go to Maven -> Update project to update project dependencies.
 <li>Open src/main/resources/server.properties, change ANDROID_SDK_DIR to your Android SDK directly. Example as below for Window or Mac.
 <pre>
