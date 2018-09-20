@@ -13,7 +13,7 @@
 <li>JAVA 8
 <li>Maven 3
 <li>Eclipse EE IDE(Optional, you can use Maven)
-<li>Servlet based server (This project is testing on Tomcat 7)
+<li>Servlet based server
 <li>Android SDK
 
 # Quick Start
